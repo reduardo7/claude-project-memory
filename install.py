@@ -66,6 +66,8 @@ def main() -> None:
     for f in [
         "docs/vault/Home.md",
         "docs/vault/Claude/Memory.md",
+        "docs/vault/Architecture/Database.md",
+        "docs/vault/Architecture/Project Structure.md",
         "docs/vault/Decisions/Index.md",
         "docs/vault/Development/Obsidian Vault.md",
         "docs/vault/Development/Expected Behaviors.md",
