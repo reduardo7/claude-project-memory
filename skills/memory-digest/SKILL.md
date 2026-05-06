@@ -30,7 +30,7 @@ Convert raw session notes and implementation specs into curated, linked, and per
 
 Process **one at a time** (sequential) to avoid write conflicts in the same vault documents (e.g., `Decisions/Index.md`, `Home.md`):
 
-1. For each file (in chronological order): create a sub-agent using the **`memory-digest-daily`** skill passing the absolute path as input. Wait for its result before continuing to the next.
+1. For each file (in chronological order): create a sub-agent using the **`claude-project-memory:memory-digest-daily`** skill passing the absolute path as input. Wait for its result before continuing to the next.
 2. If the sub-agent reports success: **delete** the corresponding `memory/daily/<ts>.md` file.
 3. If the sub-agent reports error or unclassified items (`NOTES` not empty): leave the file, record the problem for the final report. If the sub-agent wrote partially to the vault, note it in the report for human review — do not revert manually.
 
@@ -45,7 +45,7 @@ Process **one at a time** (sequential) to avoid write conflicts in the same vaul
 
 Process **one at a time** (sequential) to avoid write conflicts in the same vault documents:
 
-1. For each spec (in chronological order): create a sub-agent using the **`memory-digest-spec`** skill passing the absolute path as input. Wait for its result before continuing to the next.
+1. For each spec (in chronological order): create a sub-agent using the **`claude-project-memory:memory-digest-spec`** skill passing the absolute path as input. Wait for its result before continuing to the next.
 2. If the sub-agent reports success: append the spec's basename to the end of `specs/digested.txt`.
 3. If the sub-agent reports error: do not record in `digested.txt` — will retry on next execution. If the sub-agent wrote partially to the vault, note it in the report for human review.
 
@@ -91,8 +91,8 @@ Show the user a concise summary:
 
 | Sub-agent skill | Skill file | Purpose |
 |-----------------|------------|---------|
-| `memory-digest-daily` | `skills/memory-digest-daily/SKILL.md` | Processes one `memory/daily/<ts>.md` → vault + skills |
-| `memory-digest-spec` | `skills/memory-digest-spec/SKILL.md` | Processes one `specs/<name>.md` → vault + skills |
+| `claude-project-memory:memory-digest-daily` | `skills/memory-digest-daily/SKILL.md` | Processes one `memory/daily/<ts>.md` → vault + skills |
+| `claude-project-memory:memory-digest-spec` | `skills/memory-digest-spec/SKILL.md` | Processes one `specs/<name>.md` → vault + skills |
 
 ---
 

@@ -167,7 +167,7 @@ NOTES: <any item that could not be classified or requires human review>
 
 - Process **only** the file passed as input. Never touch other spec files.
 - Never modify or delete the spec file — it is immutable historical record.
-- The parent agent (`/memory-digest`) writes the basename to `specs/digested.txt` after confirming this agent's success.
+- The parent agent (`/claude-project-memory:memory-digest`) writes the basename to `specs/digested.txt` after confirming this agent's success.
 - Never promote secrets, credentials, or sensitive data to the vault.
 - Never duplicate information already in the vault — always `Grep` before writing.
 - Discard purely procedural content (step-by-step instructions, task lists) — the vault stores decisions and rationale, not recipes.

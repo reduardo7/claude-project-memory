@@ -84,7 +84,6 @@ def main() -> None:
     print()
     print("Next steps:")
     print("  1. Customize docs/vault/Home.md for your project")
-    print("  2. Update the skills table in skills/memory-digest-daily/SKILL.md")
     print()
     print("See README.md for full details.")
 

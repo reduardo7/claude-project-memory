@@ -26,7 +26,7 @@ def main():
         subagent_type = tool_input.get("subagent_type", "")
 
         # Do not inject for memory system agents (they have their own defined flow)
-        memory_agents = {"memory-search", "memory-digest-daily", "memory-digest-spec"}
+        memory_agents = {"claude-project-memory:memory-search", "claude-project-memory:memory-digest-daily", "claude-project-memory:memory-digest-spec"}
         if subagent_type in memory_agents:
             sys.exit(0)
 

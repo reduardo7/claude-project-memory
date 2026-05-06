@@ -160,7 +160,7 @@ NOTES: <any item that could not be classified or requires human review>
 ## Critical rules
 
 - Process **only** the file passed as input. Never touch other `memory/daily/` files.
-- Never delete the session log — the parent agent (`/memory-digest`) deletes it after confirming success.
+- Never delete the session log — the parent agent (`/claude-project-memory:memory-digest`) deletes it after confirming success.
 - Never promote secrets, credentials, or sensitive data to the vault.
 - Never duplicate information already in the vault — always `Grep` before writing.
 - Bidirectional links are mandatory — an isolated vault document loses value.

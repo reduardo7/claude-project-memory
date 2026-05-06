@@ -17,7 +17,7 @@ This guide determines which documentation to read based on the task at hand. Rev
 - `memory/memory.md`
   - Conditions:
     - When creating or modifying files in `memory/` or `memory/daily/`
-    - When running or modifying the `/memory-digest` command
+    - When running or modifying the `/claude-project-memory:memory-digest` command
     - When updating the memory system flow or classification rules
 
 - `docs/vault/Claude/Memory.md`

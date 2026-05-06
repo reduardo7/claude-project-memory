@@ -39,33 +39,34 @@ The script copies memory system files (commands, rules, hooks, vault templates) 
 
 ```
 Work session → memory/daily/YYYY-MM-DD_HHMMSS.md   (raw log)
-                       ↓ /memory-digest
+                       ↓ /claude-project-memory:memory-digest
               docs/vault/**/*.md                     (curated knowledge)
-                       ↓ memory-search agent
+                       ↓ /claude-project-memory:memory-search sub-agent
               Retrieved context before any implementation
 ```
 
 ### Key Components
 
-| Path                                    | Role                                                                        |
-| --------------------------------------- | --------------------------------------------------------------------------- |
-| `.claude-plugin/plugin.json`                  | Plugin manifest — enables `/plugin install`                                 |
-| `skills/memory-digest/SKILL.md`               | `/memory-digest` slash command in plugin format                             |
-| `skills/memory-digest-daily/SKILL.md`         | Skill used as sub-agent: distills one daily log → vault (uses Sonnet)       |
-| `skills/memory-digest-spec/SKILL.md`          | Skill used as sub-agent: distills one spec → vault (uses Sonnet)            |
-| `skills/memory-search/SKILL.md`               | Skill used as sub-agent: retrieves vault docs before tasks (uses Haiku)     |
-| `.claude-plugin/marketplace.json`             | Plugin marketplace registration                                             |
-| `memory/memory.md`                            | Operating instructions for what/when to record                              |
-| `docs/vault/Home.md`                          | Vault master index — customize per target project                           |
-| `docs/vault/Decisions/Index.md`               | ADR registry with next ADR number                                           |
-| `specs/digested.txt`                          | Registry of already-processed spec files                                    |
-| `install.py`                                  | Bootstrap script — creates directories and copies files into target project |
+| Path                                  | Role                                                                        |
+| ------------------------------------- | --------------------------------------------------------------------------- |
+| `.claude-plugin/plugin.json`          | Plugin manifest — name, version, requirements                               |
+| `hooks/hooks.json`                    | Hook definitions for all Claude Code events (used by plugin install)        |
+| `skills/memory-digest/SKILL.md`       | `/memory-digest` slash command in plugin format                             |
+| `skills/memory-digest-daily/SKILL.md` | Skill used as sub-agent: distills one daily log → vault (uses Sonnet)       |
+| `skills/memory-digest-spec/SKILL.md`  | Skill used as sub-agent: distills one spec → vault (uses Sonnet)            |
+| `skills/memory-search/SKILL.md`       | Skill used as sub-agent: retrieves vault docs before tasks (uses Haiku)     |
+| `.claude-plugin/marketplace.json`     | Plugin marketplace registration                                             |
+| `memory/memory.md`                    | Operating instructions for what/when to record                              |
+| `docs/vault/Home.md`                  | Vault master index — customize per target project                           |
+| `docs/vault/Decisions/Index.md`       | ADR registry with next ADR number                                           |
+| `specs/digested.txt`                  | Registry of already-processed spec files                                    |
+| `install.py`                          | Bootstrap script — creates directories and copies files into target project |
 
 ### Hooks
 
 **When adding or modifying hooks, update:**
 
-- `.claude-plugin/plugin.json` — used when installed via `/plugin install` (paths use `${CLAUDE_PLUGIN_ROOT}`)
+- `hooks/hooks.json` — hook definitions used when installed via `/plugin install` (paths use `${CLAUDE_PLUGIN_ROOT}`)
 
 Seven Python hooks fire on Claude Code events:
 
@@ -77,12 +78,12 @@ Seven Python hooks fire on Claude Code events:
 - `memory_pre_compact_reminder.py` — `PreCompact`: reminds Claude to persist the daily log **before** context compaction discards conversation history
 - `memory_post_compact_reminder.py` — `PostCompact`: reminds Claude to re-read base vault documents after compaction to restore architectural context
 
-### `/memory-digest` Pipeline
+### `/claude-project-memory:memory-digest` Pipeline
 
 Processes files **sequentially** (not in parallel) to avoid write conflicts in shared vault documents like `Decisions/Index.md`:
 
-1. Find all `memory/daily/*.md` → create sub-agent using `memory-digest-daily` skill for each → delete on success
-2. Find all `specs/*.md` not in `specs/digested.txt` → create sub-agent using `memory-digest-spec` skill for each → append to `digested.txt` on success
+1. Find all `memory/daily/*.md` → create sub-agent using `claude-project-memory:memory-digest-daily` skill for each → delete on success
+2. Find all `specs/*.md` not in `specs/digested.txt` → create sub-agent using `claude-project-memory:memory-digest-spec` skill for each → append to `digested.txt` on success
 3. Commit all vault changes to git
 
 ### Vault Conventions

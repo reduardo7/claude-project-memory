@@ -23,7 +23,7 @@ docs/vault/            ← curated knowledge (permanent destination)
 
 - **`memory/daily/*.md`** is the **raw log**: records without filter every decision made, every error committed, every user correction, every non-obvious finding during the current session.
 - **`docs/vault/`** is the **curated knowledge**: final destination of processed learnings.
-- The `/memory-digest` command (see `skills/memory-digest/SKILL.md`) processes `daily/` files and promotes them to the vault, deleting them after processing.
+- The `/claude-project-memory:memory-digest` command (see `skills/memory-digest/SKILL.md`) processes `daily/` files and promotes them to the vault, deleting them after processing.
 
 ---
 
@@ -45,9 +45,9 @@ Four hooks complement the activation system:
 
 | Hook                                         | Type                | When it fires                  | Behavior                                                                                                                                                                                                                          |
 | -------------------------------------------- | ------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `hooks/memory_search_reminder.py`    | `UserPromptSubmit`  | Each user prompt               | Injects a reminder to `stdout` to invoke `memory-search` before non-trivial tasks. Claude decides whether to apply it based on the prompt's complexity.                                                                           |
+| `hooks/memory_search_reminder.py`    | `UserPromptSubmit`  | Each user prompt               | Injects a reminder to `stdout` to invoke `claude-project-memory:memory-search` before non-trivial tasks. Claude decides whether to apply it based on the prompt's complexity.                                                     |
 | `hooks/memory_log_reminder.py`       | `UserPromptSubmit`  | Each user prompt               | Reads the prompt from stdin, uses keyword heuristics to detect non-trivial work, and injects a proactive reminder to create/update the daily log **before** responding. Skips trivial prompts (simple questions, clarifications). |
-| `hooks/memory_pre_agent_reminder.py` | `PreToolUse[Agent]` | Before launching any sub-agent | Injects a reminder to include vault context in the sub-agent's prompt. Does not fire for memory system sub-agents (`memory-search`, `memory-digest-daily`, `memory-digest-spec`).                                                     |
+| `hooks/memory_pre_agent_reminder.py` | `PreToolUse[Agent]` | Before launching any sub-agent | Injects a reminder to include vault context in the sub-agent's prompt. Does not fire for memory system sub-agents (`claude-project-memory:memory-search`, `claude-project-memory:memory-digest-daily`, `claude-project-memory:memory-digest-spec`). |
 | `hooks/memory_stop_reminder.py`      | `Stop`              | At the end of each response    | Injects a `systemMessage` via JSON. If there are active files in `memory/daily/`, asks to update them. If none, reminds Claude to create one only if there was significant work.                                                  |
 
 `UserPromptSubmit` and `PreToolUse` hooks print to `stdout` (additional context before the prompt/tool call). The `Stop` hook returns `{"systemMessage": "..."}` via `stdout`.
@@ -157,9 +157,9 @@ Use `Edit` to append to the file without rewriting it.
 
 ---
 
-## Daily processing (`/memory-digest`)
+## Daily processing (`/claude-project-memory:memory-digest`)
 
-Once a day (or when the user invokes it), the `/memory-digest` command:
+Once a day (or when the user invokes it), the `/claude-project-memory:memory-digest` command:
 
 1. Reads all files in `memory/daily/*.md`.
 2. Processes each one **sequentially** with a **Sonnet model** sub-agent to extract durable knowledge.
@@ -195,7 +195,7 @@ See `skills/memory-digest/SKILL.md` for the complete procedure.
 
 ```
 session → memory/daily/<ts>.md  (raw, ephemeral)
-               ↓  /memory-digest (Sonnet, sequential)
+               ↓  /claude-project-memory:memory-digest (Sonnet, sequential)
            docs/vault/...                 (curated, permanent, linked)
                ↓
            memory/daily/<ts>.md DELETED
