@@ -35,17 +35,19 @@ hooks/                           ← Python hooks (plugin root; copied to .claud
 └── memory_post_compact_reminder.py   ← PostCompact: re-read vault docs after compaction
 
 .claude/
-├── agents/
-│   ├── memory-search.md         ← retrieves vault docs before implementing
-│   ├── memory-digest-daily.md   ← sub-agent: processes one memory/daily/ file
-│   └── memory-digest-spec.md    ← sub-agent: processes one specs/ file
 └── rules/
     ├── memory.md                ← Claude Rule for memory/**/*
     └── obsidian-vault.md        ← Claude Rule for docs/vault/**/*
 
 skills/
-└── memory-digest/
-    └── SKILL.md                 ← /memory-digest in plugin format
+├── memory-digest/
+│   └── SKILL.md                 ← /memory-digest in plugin format
+├── memory-search/
+│   └── SKILL.md                 ← skill used as sub-agent: retrieves vault docs before implementing
+├── memory-digest-daily/
+│   └── SKILL.md                 ← skill used as sub-agent: processes one memory/daily/ file
+└── memory-digest-spec/
+    └── SKILL.md                 ← skill used as sub-agent: processes one specs/ file
 
 .claude-plugin/
 ├── plugin.json                  ← plugin manifest (enables /plugin install)
@@ -130,12 +132,12 @@ topic: <main topic, one line>
 
 **File:** `skills/memory-digest/SKILL.md`
 **Model:** Sonnet
-**Role:** pure orchestrator — discovers files, launches sub-agents, records results, cleans up.
+**Role:** pure orchestrator — discovers files, creates sub-agents from skills, records results, and cleans up.
 
 ### Daily log processing
 
 1. Lists `memory/daily/*.md` ordered chronologically (excludes `.gitkeep`).
-2. For each file (**sequential**, one at a time): launches the **`memory-digest-daily`** sub-agent with the absolute path. Waits for its result before continuing.
+2. For each file (**sequential**, one at a time): creates a sub-agent using the **`memory-digest-daily`** skill with the absolute path. Waits for its result before continuing.
 3. If the sub-agent confirms success: deletes the `memory/daily/<ts>.md` file.
 4. If it fails or has unclassified items (`NOTES` not empty): leaves the file and reports it. If it wrote partially to the vault, notes it for human review.
 
@@ -143,7 +145,7 @@ topic: <main topic, one line>
 
 1. Reads `specs/digested.txt` → set of already-processed basenames.
 2. Lists `specs/*.md` with `Glob` → filters those not in `digested.txt`.
-3. For each new spec (**sequential**, one at a time): launches the **`memory-digest-spec`** sub-agent with the absolute path. Waits for its result before continuing.
+3. For each new spec (**sequential**, one at a time): creates a sub-agent using the **`memory-digest-spec`** skill with the absolute path. Waits for its result before continuing.
 4. If the sub-agent confirms success: appends the basename to the end of `specs/digested.txt`.
 5. If it fails: does not record in `digested.txt` — will retry on next execution.
 
@@ -153,7 +155,7 @@ topic: <main topic, one line>
 
 ## Sub-agent `memory-digest-daily`
 
-**File:** `.claude/agents/memory-digest-daily.md`
+**Skill:** `skills/memory-digest-daily/SKILL.md`
 **Model:** Sonnet
 **Input:** absolute path of a `memory/daily/<ts>.md` file
 
@@ -173,7 +175,7 @@ Internal steps:
 
 ## Sub-agent `memory-digest-spec`
 
-**File:** `.claude/agents/memory-digest-spec.md`
+**Skill:** `skills/memory-digest-spec/SKILL.md`
 **Model:** Sonnet
 **Input:** absolute path of a `specs/<name>.md` file
 
@@ -192,9 +194,9 @@ Internal steps:
 
 ## Sub-agent `memory-search` — mandatory prior consultation
 
-Before executing non-trivial tasks (implementing features, changing architecture, modifying schema, creating/updating ADRs, answering questions about what exists in the project), Claude must invoke the `memory-search` sub-agent to retrieve relevant documentation from the vault.
+Before executing non-trivial tasks (implementing features, changing architecture, modifying schema, creating/updating ADRs, answering questions about what exists in the project), Claude must create a sub-agent from the `memory-search` skill to retrieve relevant documentation from the vault.
 
-**File:** `.claude/agents/memory-search.md`
+**Skill:** `skills/memory-search/SKILL.md`
 
 **Mandatory entry points** (read before searching by topic):
 

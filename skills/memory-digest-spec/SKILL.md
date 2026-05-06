@@ -1,6 +1,7 @@
 ---
 name: memory-digest-spec
 description: 'Use this agent to process a single spec file from specs/, extract durable architectural knowledge and implementation decisions, and promote them to the correct location in the Obsidian vault and relevant skills. Launched by /memory-digest for each undigested spec. Returns a summary of vault files and skills created/modified.'
+version: 1.0.0
 tools:
   - Glob
   - Grep
@@ -66,7 +67,7 @@ Focus on **durable knowledge** — information that remains relevant after the f
 
 ## Step 4 — Write to vault
 
-> **Sync note:** Steps 4–7 are identical in both `memory-digest-daily.md` and `memory-digest-spec.md`. When updating these steps, apply the same changes to both files. The skills table in Step 6 is also duplicated in `docs/vault/Claude/Memory.md` — update all three locations when adding or removing a skill.
+> **Sync note:** Steps 4–7 are identical in both `skills/memory-digest-daily/SKILL.md` and `skills/memory-digest-spec/SKILL.md`. When updating these steps, apply the same changes to both files. The skills table in Step 6 is also duplicated in `docs/vault/Claude/Memory.md` — update all three locations when adding or removing a skill.
 
 For each classified item:
 

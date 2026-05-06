@@ -45,10 +45,10 @@ Four hooks complement the activation system:
 
 | Hook                                         | Type                | When it fires                  | Behavior                                                                                                                                                                                                                          |
 | -------------------------------------------- | ------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.claude/hooks/memory_search_reminder.py`    | `UserPromptSubmit`  | Each user prompt               | Injects a reminder to `stdout` to invoke `memory-search` before non-trivial tasks. Claude decides whether to apply it based on the prompt's complexity.                                                                           |
-| `.claude/hooks/memory_log_reminder.py`       | `UserPromptSubmit`  | Each user prompt               | Reads the prompt from stdin, uses keyword heuristics to detect non-trivial work, and injects a proactive reminder to create/update the daily log **before** responding. Skips trivial prompts (simple questions, clarifications). |
-| `.claude/hooks/memory_pre_agent_reminder.py` | `PreToolUse[Agent]` | Before launching any sub-agent | Injects a reminder to include vault context in the sub-agent's prompt. Does not fire for memory system agents (`memory-search`, `memory-digest-daily`, `memory-digest-spec`).                                                     |
-| `.claude/hooks/memory_stop_reminder.py`      | `Stop`              | At the end of each response    | Injects a `systemMessage` via JSON. If there are active files in `memory/daily/`, asks to update them. If none, reminds Claude to create one only if there was significant work.                                                  |
+| `hooks/memory_search_reminder.py`    | `UserPromptSubmit`  | Each user prompt               | Injects a reminder to `stdout` to invoke `memory-search` before non-trivial tasks. Claude decides whether to apply it based on the prompt's complexity.                                                                           |
+| `hooks/memory_log_reminder.py`       | `UserPromptSubmit`  | Each user prompt               | Reads the prompt from stdin, uses keyword heuristics to detect non-trivial work, and injects a proactive reminder to create/update the daily log **before** responding. Skips trivial prompts (simple questions, clarifications). |
+| `hooks/memory_pre_agent_reminder.py` | `PreToolUse[Agent]` | Before launching any sub-agent | Injects a reminder to include vault context in the sub-agent's prompt. Does not fire for memory system sub-agents (`memory-search`, `memory-digest-daily`, `memory-digest-spec`).                                                     |
+| `hooks/memory_stop_reminder.py`      | `Stop`              | At the end of each response    | Injects a `systemMessage` via JSON. If there are active files in `memory/daily/`, asks to update them. If none, reminds Claude to create one only if there was significant work.                                                  |
 
 `UserPromptSubmit` and `PreToolUse` hooks print to `stdout` (additional context before the prompt/tool call). The `Stop` hook returns `{"systemMessage": "..."}` via `stdout`.
 
@@ -56,13 +56,13 @@ Four hooks complement the activation system:
 
 ## Searching documentation before each task
 
-**Before implementing any non-trivial task**, invoke the `memory-search` sub-agent to retrieve all relevant documentation from the vault:
+**Before implementing any non-trivial task**, create a sub-agent from the `memory-search` skill to retrieve all relevant documentation from the vault:
 
 ```
 Agent(subagent_type: "memory-search", prompt: "<task description>")
 ```
 
-The agent reads `docs/vault/Home.md`, `conditional-docs.md` (if it exists), recent daily logs, and `Decisions/Index.md` — then follows all relevant cross-references in the vault. Returns the full content of each document — without summarizing or paraphrasing.
+The sub-agent reads `docs/vault/Home.md`, `conditional-docs.md` (if it exists), recent daily logs, and `Decisions/Index.md` — then follows all relevant cross-references in the vault. Returns the full content of each document — without summarizing or paraphrasing.
 
 **When it is mandatory:**
 

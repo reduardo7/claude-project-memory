@@ -53,7 +53,6 @@ def main() -> None:
         "docs/vault/Development",
         "docs/vault/Project",
         ".claude/commands",
-        ".claude/agents",
     ]:
         (target / sub).mkdir(parents=True, exist_ok=True)
 
@@ -80,21 +79,12 @@ def main() -> None:
         target / ".claude/commands/conditional-docs.md",
     )
 
-    # Copy Claude agents
-    print("→ Copying .claude/agents/")
-    for agent in ["memory-digest-daily.md", "memory-digest-spec.md", "memory-search.md"]:
-        shutil.copy2(
-            plugin_dir / ".claude/agents" / agent,
-            target / ".claude/agents" / agent,
-        )
-        print(f"  CREATED: .claude/agents/{agent}")
-
     print()
     print("Installation complete.")
     print()
     print("Next steps:")
     print("  1. Customize docs/vault/Home.md for your project")
-    print("  2. Update the skills table in .claude/agents/memory-digest-daily.md")
+    print("  2. Update the skills table in skills/memory-digest-daily/SKILL.md")
     print()
     print("See README.md for full details.")
 

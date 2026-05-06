@@ -1,6 +1,7 @@
 ---
 name: memory-digest-daily
 description: 'Use this agent to process a single memory/daily session log file, extract durable knowledge, and promote it to the correct location in the Obsidian vault and relevant skills. Launched by /memory-digest for each pending daily log. Returns a summary of vault files and skills created/modified.'
+version: 1.0.0
 tools:
   - Glob
   - Grep
@@ -60,7 +61,7 @@ For each piece of information in the log, classify it:
 
 ## Step 4 — Write to vault
 
-> **Sync note:** Steps 4–7 are identical in both `memory-digest-daily.md` and `memory-digest-spec.md`. When updating these steps, apply the same changes to both files. The skills table in Step 6 is also duplicated in `docs/vault/Claude/Memory.md` — update all three locations when adding or removing a skill.
+> **Sync note:** Steps 4–7 are identical in both `skills/memory-digest-daily/SKILL.md` and `skills/memory-digest-spec/SKILL.md`. When updating these steps, apply the same changes to both files. The skills table in Step 6 is also duplicated in `docs/vault/Claude/Memory.md` — update all three locations when adding or removing a skill.
 
 For each classified item:
 
