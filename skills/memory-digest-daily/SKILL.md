@@ -32,7 +32,7 @@ Before reading the session log, load the minimum vault context needed to place k
 - Read `docs/vault/Home.md` — vault structure and section index.
 - Read `docs/vault/Decisions/Index.md` — existing ADRs (avoid duplicates, find the next ADR number).
 - Read `.claude/commands/conditional-docs.md` — to know which docs to update if new conditional reading rules are needed.
-- Read `docs/vault/Development/Obsidian Vault.md` — mandatory: naming conventions (kebab-case, snake_case, ADR naming), wikilink format (full path required), and the checklist for creating/renaming vault files. Claude Rules for this path may not fire in sub-agent context — read it explicitly.
+- Invoke skill `obsidian-vault` — mandatory: naming conventions (kebab-case, snake_case, ADR naming), wikilink format (full path required), and the checklist for creating/renaming vault files. Claude Rules may not fire in sub-agent context — invoke explicitly.
 
 ---
 
