@@ -21,7 +21,7 @@ Master content map. Open this vault from `docs/vault/` in Obsidian.
 | Note | Description |
 |------|-------------|
 | [[Architecture/Database]] | Database schema. |
-| [[Architecture/Project Structure]] | Repositories, layers, APIs, infrastructure |
+| [[Architecture/Project Structure]] | Plugin directory layout, what `install.py` creates, and runtime requirements |
 
 ---
 
