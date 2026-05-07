@@ -1,6 +1,6 @@
 ---
 name: install
-description: Install claude-project-memory into the current project. Ensures `uv` is available (installing it if needed), then runs `install.py` with the current project directory as the target.
+description: Install claude-project-memory into the current project.
 version: 1.0.0
 model: sonnet
 allowed-tools: ["Bash"]

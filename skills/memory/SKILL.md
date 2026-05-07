@@ -1,6 +1,6 @@
 ---
 name: memory
-description: Operating instructions for the long-term memory system — what to record, when, and in what format during sessions.
+description: Long-term memory — what, when, and how to record during sessions.
 version: 1.1.0
 model: haiku
 allowed-tools: [Read]

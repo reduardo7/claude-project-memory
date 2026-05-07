@@ -1,6 +1,6 @@
 ---
 name: memory-digest-daily
-description: 'Sub-agent: distills one session log → Obsidian vault + skills. Called by memory-digest.'
+description: 'Sub-agent for memory-digest — distills a session log into the vault.'
 version: 1.0.0
 tools:
   - Glob

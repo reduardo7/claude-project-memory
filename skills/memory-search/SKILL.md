@@ -1,6 +1,6 @@
 ---
 name: 'memory-search'
-description: "Retrieves relevant documentation from the project vault (docs/vault/) before implementing features, making architectural decisions, or answering questions about existing project context."
+description: "Search the vault for relevant docs before features or architectural decisions."
 version: 1.0.0
 tools:
   - Glob

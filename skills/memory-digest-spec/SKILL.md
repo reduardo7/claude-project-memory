@@ -1,6 +1,6 @@
 ---
 name: memory-digest-spec
-description: 'Sub-agent: distills one spec file → Obsidian vault + skills. Called by memory-digest.'
+description: 'Sub-agent for memory-digest — distills a spec file into the vault.'
 version: 1.0.0
 tools:
   - Glob
