@@ -35,7 +35,7 @@ Update **immediately** when it happens — never batch for the end:
 Invoke `claude-project-memory:memory-search` before features, architectural changes, schema changes, ADR work, or questions about what exists:
 
 ```
-Agent(subagent_type: "claude-project-memory:memory-search", prompt: "<task>")
+Skill(skill: "claude-project-memory:memory-search", args: "<task>")
 ```
 
 Skip for: simple bug fixes, questions already answered in context, trivial sessions.

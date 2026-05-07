@@ -25,16 +25,12 @@ def main():
         tool_input = input_data.get("tool_input", {})
         subagent_type = tool_input.get("subagent_type", "")
 
-        # Do not inject for memory system agents (they have their own defined flow)
-        memory_agents = {"claude-project-memory:memory-search", "claude-project-memory:memory-digest-daily", "claude-project-memory:memory-digest-spec"}
-        if subagent_type in memory_agents:
-            sys.exit(0)
-
         reminder = (
             "<pre-agent-reminder>"
             "Before the sub-agent starts working, ensure its prompt includes relevant "
             "documentation context. If you haven't yet consulted the memory-search "
-            "sub-agent for this task, consider doing so first and then passing the "
+            "skill (`Skill(skill: \"claude-project-memory:memory-search\", args: \"<task>\")`) "
+            "for this task, consider doing so first and then passing the "
             "retrieved documentation as context in the sub-agent's prompt."
             "</pre-agent-reminder>"
         )

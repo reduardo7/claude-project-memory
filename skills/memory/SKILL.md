@@ -55,7 +55,7 @@ The operational rules in `context.md` reach Claude via three complementary paths
 | `hooks/memory_session_start_reminder.py` | `SessionStart` + `PostCompact` | Session start and after compaction | Reads and injects `skills/memory/context.md` directly |
 | `hooks/memory_search_reminder.py` | `UserPromptSubmit` | Each user prompt | Reminds to invoke `memory-search` before non-trivial tasks |
 | `hooks/memory_log_reminder.py` | `UserPromptSubmit` | Each user prompt | Detects non-trivial work; reminds to create/update daily log before responding |
-| `hooks/memory_pre_agent_reminder.py` | `PreToolUse[Agent]` | Before any sub-agent | Reminds to include vault context; skips memory system agents |
+| `hooks/memory_pre_agent_reminder.py` | `PreToolUse[Agent]` | Before any sub-agent | Reminds to include vault context via the `memory-search` skill |
 | `hooks/memory_stop_reminder.py` | `Stop` | End of each response | Reminds to update daily log or create one if there was significant work |
 | `hooks/memory_pre_compact_reminder.py` | `PreCompact` | Before compaction | Reminds to persist daily log before context is discarded |
 | `hooks/memory_post_compact_reminder.py` | `PostCompact` | After compaction | Reminds to re-read base vault docs to restore architectural context |
