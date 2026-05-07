@@ -1,6 +1,6 @@
 ---
 name: memory-digest-spec
-description: 'Processes a single spec file from specs/, extracts durable architectural knowledge and implementation decisions, and promotes them to the correct location in the Obsidian vault and relevant skills. Launched by /claude-project-memory:memory-digest for each undigested spec. Returns a summary of vault files and skills created/modified.'
+description: 'Sub-agent: distills one spec file → Obsidian vault + skills. Called by memory-digest.'
 version: 1.0.0
 tools:
   - Glob

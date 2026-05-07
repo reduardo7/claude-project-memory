@@ -1,6 +1,6 @@
 ---
 name: memory-digest-daily
-description: 'Processes a single memory/daily session log file, extracts durable knowledge, and promotes it to the correct location in the Obsidian vault and relevant skills. Launched by /claude-project-memory:memory-digest for each pending daily log. Returns a summary of vault files and skills created/modified.'
+description: 'Sub-agent: distills one session log → Obsidian vault + skills. Called by memory-digest.'
 version: 1.0.0
 tools:
   - Glob
