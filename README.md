@@ -21,7 +21,7 @@ This makes the memory a **project asset**, not a personal one.
 Session work
   └─→ memory/daily/<timestamp>.md   (raw, ephemeral — Claude writes in real time)
 
-/memory-digest  (orchestrator, Sonnet model)
+/claude-project-memory:memory-digest  (orchestrator, Sonnet model)
   ├─→ [each daily log] → sub-agent from claude-project-memory:memory-digest-daily skill
   │       └─→ extracts durable knowledge → docs/vault/...
   │       └─→ deletes memory/daily/<ts>.md
