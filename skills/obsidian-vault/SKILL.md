@@ -9,6 +9,28 @@ Conventions for maintaining the integrity of the Obsidian vault (`docs/vault/`).
 
 ---
 
+## CRITICAL — Document size limit (enforce before AND after writing)
+
+> **This rule takes priority over everything else. Apply it before adding content to any vault file.**
+
+**Any document exceeding 150 lines MUST be split into sub-documents.** This is not optional.
+
+**Enforcement steps — run both every time you write to the vault:**
+
+1. **Before writing:** count the target file's current lines. If already ≥ 150, split it first, then add the new content to the appropriate sub-document.
+2. **After writing:** count the resulting file again. If it now exceeds 150 lines, split it before saving.
+
+**How to count:** `wc -l <file>` or count lines in the Read tool output.
+
+**Splitting is mandatory even when:**
+- You are adding content that seems small (a few lines can push a doc over the limit).
+- You are updating an existing document that was not split before.
+- The document index already exists — add sub-documents inside the folder.
+
+The "Long documents — Splitting into sub-documents" section below contains the full structural rules.
+
+---
+
 ## YAML Frontmatter (title + summary)
 
 Every vault document **must** have a YAML frontmatter block at the top with at least `title` and `summary`:
@@ -124,9 +146,10 @@ Development/
 
 ## Checklist when creating/renaming files
 
-1. Add YAML frontmatter with `title` and `summary` (see section above).
-2. Verify the name doesn't already exist in another vault folder.
-3. If ambiguous: use full path in all wikilinks.
-4. Add wikilink in `Home.md` under the corresponding section.
-5. Verify no orphaned references to the old name remain (search the entire repo, not just the vault).
-6. If the document exceeds 150 lines: split into sub-documents (see section above) before adding new content.
+1. **Count lines in the target file first** (`wc -l`) — if ≥ 150, split before adding content.
+2. Add YAML frontmatter with `title` and `summary` (see section above).
+3. Verify the name doesn't already exist in another vault folder.
+4. If ambiguous: use full path in all wikilinks.
+5. Add wikilink in `Home.md` under the corresponding section.
+6. Verify no orphaned references to the old name remain (search the entire repo, not just the vault).
+7. **Count lines in the resulting file after writing** — if it now exceeds 150 lines, split immediately (see "Long documents" section above) before finishing.
