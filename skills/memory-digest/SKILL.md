@@ -2,7 +2,7 @@
 name: memory-digest
 description: Distill daily memory logs into the vault.
 version: 1.0.0
-model: sonnet
+model: haiku
 allowed-tools: ["Glob", "Grep", "Read", "Edit", "Write", "Bash", "Agent"]
 ---
 
