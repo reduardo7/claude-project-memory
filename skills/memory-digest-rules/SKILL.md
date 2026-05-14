@@ -18,6 +18,25 @@ Before promoting any item, ask: *"Does this help someone write better code in th
 
 ---
 
+## Reference vs. value — code findings
+
+When a code finding relates to specific files, modules, or configuration:
+
+- **Write the file path and its purpose**, not the specific values it contains.
+- **Include a brief description** of what the file/module contains (for future readers to know why it matters).
+
+**Examples:**
+
+| ❌ Do NOT write | ✅ Write instead |
+| --- | --- |
+| "The constant `MAX_RETRIES` is set to 5" | "`src/config/constants.ts` — contains retry configuration and exponential backoff parameters" |
+| "The User enum has values: ADMIN, USER, GUEST" | "`src/types/user.ts` — defines user role types and permission boundaries" |
+| "The database connection pool size is 10" | "`src/db/pool.ts` — manages connection pooling strategy and resource limits" |
+
+**Rationale:** File paths and purposes remain durable and accurate. Specific values change frequently and belong in source code, not vault documentation. Readers who need the exact values will find them by reading the referenced file.
+
+---
+
 ## Write to vault
 
 > **Writing convention:** All vault content must follow the `obsidian-vault` skill — YAML frontmatter, kebab-case filenames, wikilink format, and section structure. The skill was invoked in Step 1; apply its rules when writing every document.
