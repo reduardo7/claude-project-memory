@@ -67,11 +67,12 @@ After processing all files (logs and specs), commit all generated changes:
    - `.agents/rules/`
    - `CLAUDE.md` (if modified by any sub-agent)
 3. Create the commit with the following format:
-   - **Title:** `AI - Memory Digest`
-   - **Body:** summary of changes made during this digest, including:
-     - Logs processed and deleted (with what was extracted from each).
-     - Specs processed and what was updated in vault/skills for each.
-     - Claude Rules created or updated (if any).
+   - **Title:** `docs: AI MemoryDigest`
+   - **Body:** technical summary in English listing only section titles (no detail):
+     - Logs processed (titles only).
+     - Specs processed (titles only).
+     - Vault files created or updated (titles only).
+     - Claude Rules created or updated (titles only, if any).
 4. **Do not push** — local commit only in the current branch.
 5. If there are no changes to commit, inform the user and skip the commit.
 
